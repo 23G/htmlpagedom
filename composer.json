@@ -1,38 +1,40 @@
 {
-	"name": "23g/htmlpagedom",
-	"description": "jQuery-inspired DOM manipulation extension for Symfony's Crawler",
-	"type": "library",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Christoph Singer",
-			"email": "singer@webagentur72.de",
-			"homepage": "http://www.webagentur72.de"
-		}
-	],
-	"require": {
-		"php": "^7.4 || ^8.0",
-		"ext-libxml": "*",
-		"symfony/dom-crawler": "^5.2",
-		"symfony/css-selector": "^5.2"
-	},
-	"require-dev": {
-		"mikey179/vfsstream": "^1.6",
-		"phpunit/phpunit": "^9.5",
-		"scrutinizer/ocular": "^1.8",
-		"wa72/html-pretty-min": "~0.1"
-	},
-	"suggest": {
-		"wa72/html-pretty-min": "Minify or indent HTML documents"
-	},
-	"autoload": {
-		"psr-4": {
-			"Wa72\\HtmlPageDom\\": "src/"
-		}
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "2.0-dev"
-		}
-	}
+    "name":"wa72/htmlpagedom",
+    "description":"jQuery-inspired DOM manipulation extension for Symfony's Crawler",
+    "keywords":["HTML", "DOM", "Crawler"],
+    "homepage":"http://github.com/wasinger/htmlpagedom",
+    "type":"library",
+    "license":"MIT",
+    "authors":[
+        {
+            "name":"Christoph Singer",
+            "email":"singer@webagentur72.de",
+            "homepage":"http://www.webagentur72.de"
+        }
+    ],
+    "require":{
+        "php":"^7.4 || ^8.0",
+        "ext-libxml": "*",
+        "symfony/dom-crawler":"^5.2",
+        "symfony/css-selector":"^5.2"
+    },
+    "require-dev": {
+        "mikey179/vfsstream": "^1.6",
+        "phpunit/phpunit": "^9.5",
+        "scrutinizer/ocular": "^1.8",
+        "wa72/html-pretty-min": "~0.1"
+    },
+    "suggest": {
+        "wa72/html-pretty-min": "Minify or indent HTML documents"
+    },
+    "autoload":{
+        "psr-4":{
+            "Wa72\\HtmlPageDom\\":"src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
+    }
 }
