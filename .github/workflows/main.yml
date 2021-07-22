@@ -28,7 +28,7 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: xdebug
 
-      - name: do some magic Composer cache
+      - name: Setup cache
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
       - uses: actions/cache@v2
@@ -37,11 +37,8 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      - name: install dependencies
-        run: composer update --${{ matrix.dependency-version }}
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
 
-      - name: run tests
-        run: composer test -- --coverage-clover=coverage.clover
-
-      - name: upload code coverage
-        run: php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
+      - name: Run tests
+        run: ./vendor/bin/phpunit
