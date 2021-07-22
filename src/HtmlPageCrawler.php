@@ -1,4 +1,5 @@
 <?php
+
 namespace Wa72\HtmlPageDom;
 
 use Symfony\Component\DomCrawler\Crawler;
@@ -427,7 +428,7 @@ class HtmlPageCrawler extends Crawler
                 $newnode = static::importNewnode($newnode, $node, $i);
                 if ($refnode === null) {
                     $node->appendChild($newnode);
-                } else if ($refnode !== $newnode) {
+                } elseif ($refnode !== $newnode) {
                     $node->insertBefore($newnode, $refnode);
                 }
                 $newnodes[] = $newnode;
@@ -561,7 +562,7 @@ class HtmlPageCrawler extends Crawler
         foreach ($e as $i => $node) {
             /** @var \DOMNode $node */
             $parent = $node->parentNode;
-            $refnode  = $node->nextSibling;
+            $refnode = $node->nextSibling;
             foreach ($this as $j => $newnode) {
                 /** @var \DOMNode $newnode */
                 $newnode = static::importNewnode($newnode, $node, $i);
@@ -590,7 +591,7 @@ class HtmlPageCrawler extends Crawler
         foreach ($this as $i => $node) {
             /** @var \DOMNode $node */
             $parent = $node->parentNode;
-            $refnode  = $node->nextSibling;
+            $refnode = $node->nextSibling;
             foreach ($content as $j => $newnode) {
                 /** @var \DOMNode $newnode */
                 $newnode = static::importNewnode($newnode, $node, $i);
@@ -675,7 +676,7 @@ class HtmlPageCrawler extends Crawler
     public function unwrap()
     {
         $parents = array();
-        foreach($this as $i => $node) {
+        foreach ($this as $i => $node) {
             $parents[] = $node->parentNode;
         }
 
@@ -691,7 +692,7 @@ class HtmlPageCrawler extends Crawler
      */
     public function unwrapInner()
     {
-        foreach($this as $i => $node) {
+        foreach ($this as $i => $node) {
             if (!$node->parentNode instanceof \DOMElement) {
                 throw new \InvalidArgumentException('DOMElement does not have a parent DOMElement node.');
             }
@@ -760,8 +761,8 @@ class HtmlPageCrawler extends Crawler
      * Wrap an HTML structure around all elements in the set of matched elements.
      *
      * @param string|HtmlPageCrawler|\DOMNode|\DOMNodeList $content
-     * @throws \LogicException
      * @return \Wa72\HtmlPageDom\HtmlPageCrawler $this for chaining
+     * @throws \LogicException
      * @api
      */
     public function wrapAll($content)
@@ -779,7 +780,7 @@ class HtmlPageCrawler extends Crawler
         /** @var \DOMNode $newnode */
         $newnode = static::importNewnode($newnode, $parent);
 
-        $newnode = $parent->insertBefore($newnode,$this->getNode(0));
+        $newnode = $parent->insertBefore($newnode, $this->getNode(0));
         $content->clear();
         $content->add($newnode);
 
@@ -839,7 +840,7 @@ class HtmlPageCrawler extends Crawler
                 $root->appendChild($doc->importNode($node, true));
             }
             $html = trim($doc->saveHTML());
-            return preg_replace('@^<'.self::FRAGMENT_ROOT_TAGNAME.'[^>]*>|</'.self::FRAGMENT_ROOT_TAGNAME.'>$@', '', $html);
+            return preg_replace('@^<' . self::FRAGMENT_ROOT_TAGNAME . '[^>]*>|</' . self::FRAGMENT_ROOT_TAGNAME . '>$@', '', $html);
         }
     }
 
@@ -916,8 +917,8 @@ class HtmlPageCrawler extends Crawler
      * Function overriden from Crawler because HTML fragments are always added as complete documents there
      *
      *
-     * @param string      $content A string to parse as HTML/XML
-     * @param null|string $type    The content type of the string
+     * @param string $content A string to parse as HTML/XML
+     * @param null|string $type The content type of the string
      *
      * @return null|void
      */
@@ -977,7 +978,8 @@ class HtmlPageCrawler extends Crawler
      * @param int $clone
      * @return \DOMNode
      */
-    protected static function importNewnode(\DOMNode $newnode, \DOMNode $referencenode, $clone = 0) {
+    protected static function importNewnode(\DOMNode $newnode, \DOMNode $referencenode, $clone = 0)
+    {
         if ($newnode->ownerDocument !== $referencenode->ownerDocument) {
             $referencenode->ownerDocument->preserveWhiteSpace = false;
             $newnode = $referencenode->ownerDocument->importNode($newnode, true);

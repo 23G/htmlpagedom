@@ -1,4 +1,5 @@
 <?php
+
 namespace Wa72\HtmlPageDom;
 
 /**
@@ -6,7 +7,8 @@ namespace Wa72\HtmlPageDom;
  *
  * @package Wa72\HtmlPageDom
  */
-class Helpers {
+class Helpers
+{
 
     /**
      * remove newlines from string and minimize whitespace (multiple whitespace characters replaced by one space)
@@ -17,8 +19,7 @@ class Helpers {
      */
     public static function trimNewlines($string)
     {
-        $string = str_replace("\n", ' ', $string);
-        $string = str_replace("\r", ' ', $string);
+        $string = str_replace(["\n", "\r"], ' ', $string);
         $string = preg_replace('/\s+/', ' ', $string);
         return trim($string);
     }
@@ -74,9 +75,12 @@ class Helpers {
      */
     public static function getBodyNodeFromHtmlFragment($html, $charset = 'UTF-8')
     {
+        $unsafeLibXml = \LIBXML_VERSION < 20900;
         $html = '<html><body>' . $html . '</body></html>';
         $current = libxml_use_internal_errors(true);
-        $disableEntities = libxml_disable_entity_loader(true);
+        if ($unsafeLibXml) {
+            $disableEntities = libxml_disable_entity_loader(true);
+        }
         $d = new \DOMDocument('1.0', $charset);
         $d->validateOnParse = true;
         if (function_exists('mb_convert_encoding') && in_array(
@@ -88,7 +92,9 @@ class Helpers {
         }
         @$d->loadHTML($html);
         libxml_use_internal_errors($current);
-        libxml_disable_entity_loader($disableEntities);
+        if ($unsafeLibXml) {
+            libxml_disable_entity_loader($disableEntities);
+        }
         return $d->getElementsByTagName('body')->item(0);
     }
 }
